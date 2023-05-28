@@ -9,8 +9,8 @@ function App() {
       fetch("/anime")
       .then(response => response.json())
       .then(data => {
-        setAnime(data.anime);
         console.log(data.anime);
+        setAnime(data.anime);
       });
     }, []);
 
@@ -21,7 +21,7 @@ function App() {
                     <h1>{ani.title}</h1>
                     <h3>Genres</h3>
                     <ul>
-                      {ani.genres.map(genre => { return <li key={genre.slug}>{genre.name}</li>})}
+                      {ani.genre.map(genre => { return <li key={genre}>{genre}</li>})}
                     </ul>
                     <h3>Rating</h3>
                     <p>{ani.rating}</p>

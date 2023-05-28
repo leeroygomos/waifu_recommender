@@ -9,7 +9,7 @@ class AnimeService:
     
     def getAllAnime():
         animes = Anime.query.all()
-        return jsonify([anime.serialize for anime in animes])
+        return jsonify({'anime':[anime.serialize for anime in animes]})
         
     def getAllAnimeCharacters(slug):
         anime = Anime.query.filter_by(slug=slug).first()
