@@ -20,9 +20,7 @@ function App() {
           return (<div key={ani.slug}>
                     <h1>{ani.title}</h1>
                     <h3>Genres</h3>
-                    <ul>
-                      {ani.genre.map(genre => { return <li key={genre}>{genre}</li>})}
-                    </ul>
+                    <p>{ani.genre}</p>
                     <h3>Rating</h3>
                     <p>{ani.rating}</p>
                     <h3># Episodes: </h3>

@@ -38,7 +38,7 @@ def getAnime(slug):
 def getAllCharacters():
     return CharacterService.getAllCharacters()
 
-# /characters/
+# /characters/<slug>
 @app.route('/characters/<slug>', methods=['GET'])
 def getAllCharactersByAnime(slug):
     return AnimeService.getAllAnimeCharacters(slug)
