@@ -1,10 +1,12 @@
 # Imports
-from flask import Flask, request
+from flask import Flask, request, make_response
 from os import environ, path
 from dotenv import load_dotenv
 from models.db import db
 from services.AnimeService import AnimeService
 from services.CharacterService import CharacterService
+from services.DatabaseService import DatabaseService
+import asyncio
 
 # Load environment variables
 basedir = path.abspath(path.dirname(__file__))
@@ -52,6 +54,17 @@ def getCharacter(id):
 def searchAnime():
     args = request.args.to_dict()
     return AnimeService.searchAnime(args)
+
+@app.route('/initGenres', methods=['GET'])
+def initGenres():
+    return DatabaseService.initGenres()
+
+@app.route('/initAnime', methods=['GET'])
+def initAnime():
+    # asyncio.ensure_future(DatabaseService.initAnime())
+    # return make_response("OK", 202)
+    return DatabaseService.initAnime()
+
 
 # Run application
 if __name__ == '__main__':
