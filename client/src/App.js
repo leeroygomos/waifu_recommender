@@ -1,36 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
+// Components
+import Layout from './components/Layout/Layout';
+import Home from './components/Home/Home';
+import Anime from './components/Anime/Anime';
+import Characters from './components/Characters/Characters';
+
 function App() {
-
-  const [anime, setAnime] = useState([{}]);
-
-  useEffect(() => {
-      fetch("/anime")
-      .then(response => response.json())
-      .then(data => {
-        console.log(data.anime);
-        setAnime(data.anime);
-      });
-    }, []);
-
   return (
-    <div>
-        {anime.map(ani => {
-          return (<div key={ani.slug}>
-                    <h1>{ani.title}</h1>
-                    <h3>Genres</h3>
-                    <p>{ani.genre}</p>
-                    <h3>Rating</h3>
-                    <p>{ani.rating}</p>
-                    <h3># Episodes: </h3>
-                    <p>{ani.episode_count}</p>
-                    <h3>Release Year</h3>
-                    <p>{ani.release_year}</p>
-                  </div>
-              )
-        })}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Layout/>}>
+          <Route index element={<Home/>}/>
+          <Route path='anime' element={<Anime/>}/>
+          <Route path='characters' element={<Characters/>}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

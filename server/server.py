@@ -1,12 +1,11 @@
 # Imports
-from flask import Flask, request, make_response
+from flask import Flask, request
 from os import environ, path
 from dotenv import load_dotenv
 from models.db import db
 from services.AnimeService import AnimeService
 from services.CharacterService import CharacterService
 from services.DatabaseService import DatabaseService
-import asyncio
 
 # Load environment variables
 basedir = path.abspath(path.dirname(__file__))
@@ -27,18 +26,20 @@ def index():
 
 # /anime
 @app.route('/anime', methods=['GET'])
-def getAllAnime():
-    return AnimeService.getAllAnime()
+def getAnime():
+    args = request.args
+    return AnimeService.getAnime(args)
 
 # /anime/<slug> 
-@app.route('/anime/<slug>', methods=['GET'])
-def getAnime(slug):
-    return AnimeService.getAnime(slug)
+@app.route('/anime/<id>', methods=['GET'])
+def getAnimeById(id):
+    return AnimeService.getAnimeById(id)
 
 # /characters
 @app.route('/characters', methods=['GET'])
-def getAllCharacters():
-    return CharacterService.getAllCharacters()
+def getCharacters():
+    args = request.args
+    return CharacterService.getCharacters(args)
 
 # /characters/<slug>
 @app.route('/characters/<slug>', methods=['GET'])
@@ -61,10 +62,23 @@ def initGenres():
 
 @app.route('/initAnime', methods=['GET'])
 def initAnime():
-    # asyncio.ensure_future(DatabaseService.initAnime())
-    # return make_response("OK", 202)
     return DatabaseService.initAnime()
 
+@app.route('/gatherUsernames/<upper>/<lower>', methods=['GET'])
+def gatherUsernames(upper, lower):
+    return DatabaseService.gatherUsernames(upper, lower)
+
+@app.route('/getUserFavorites', methods=['GET'])
+def getUserFavorites():
+    return DatabaseService.getUserFavorites()
+
+@app.route('/initCharacters/<page>', methods=['GET'])
+def initCharacters(page):
+    return DatabaseService.initCharacters(page)
+
+@app.route('/retryFailedCharacters', methods=['GET'])
+def retryFailedCharacters():
+    return DatabaseService.retryFailedCharacters()
 
 # Run application
 if __name__ == '__main__':

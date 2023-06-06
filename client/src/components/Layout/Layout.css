@@ -1,0 +1,30 @@
+.layout {
+    display: block;
+    min-height: 100vh;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    gap: 10%;
+    height: 5%;
+    width: 100%;
+    background-color: rgb(18, 35, 81);
+    margin: 0;
+}
+
+.navbar a {
+    color: white;
+    font-size: x-large;
+    text-decoration: none;
+}
+
+a:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.footer {
+    background-color: aqua;
+    color: black
+}
