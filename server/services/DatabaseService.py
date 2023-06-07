@@ -290,6 +290,43 @@ class DatabaseService:
                 print("Character with mal_id {} failed to commit".format(currentChar["mal_id"]))
 
         return 'done'
+    
+    def updateCharacterAnime():
+        characters = Characters.query.filter(Characters.anime == "{}")
+
+        for character in characters:
+            requestString = "https://api.jikan.moe/v4/characters/{}/anime".format(character.id)
+            try:
+                response = requests.get(requestString,timeout=5)
+            except:
+                print("timed out... continuing")
+                continue
+            while (response.status_code == 429):
+                print("Sleeping...")
+                time.sleep(3)
+                response = requests.get(requestString)
+            
+            try:
+                currentCharAnime = response.json()['data']
+            except:
+                continue
+            animeIds = []
+
+            for currentAnime in currentCharAnime:
+                animeIds.append(currentAnime['anime']['mal_id'])
+
+            character.anime = animeIds
+
+            db.session.add(character)
+
+            try:
+                db.session.commit()
+                print("Updated character #{}".format(character.id))
+            except:
+                db.session.rollback()
+                print("Character with mal_id {} failed to commit".format(character.id))
+
+        return 'finished'
 
             
             

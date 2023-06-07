@@ -80,6 +80,10 @@ def initCharacters(page):
 def retryFailedCharacters():
     return DatabaseService.retryFailedCharacters()
 
+@app.route('/updateCharacterAnime', methods=['GET'])
+def updateCharacterAnime():
+    return DatabaseService.updateCharacterAnime()
+
 # Run application
 if __name__ == '__main__':
     app.run(host='localhost', port=8000, debug=True)
